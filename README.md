@@ -1,3 +1,3 @@
 # hometown
 
-See [documentation](https://lezurex.github.io/hometown/) 
+See [documentation](https://lezurex.github.io/hometown/)
