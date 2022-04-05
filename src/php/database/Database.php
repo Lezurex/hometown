@@ -1,37 +1,16 @@
 <?php
+
 namespace Database;
 
 use PDO;
 
-class Database
+interface Database
 {
-    private static $host = "db";
-    private static $username = "root";
-    private static $password = "root";
-    private static $database = "hometown";
-    private static $connection;
+    public static function connect(): void;
 
+    public static function disconnect(): void;
 
-    public static function connect()
-    {
-        self::$connection = new pdo(self::$host, self::$username, self::$password, self::$database);
-    }
+    public static function isConnected(): bool;
 
-    public static function disconnect()
-    {
-        if (self::isConnected()) {
-            mysqli_close(self::$connection);
-        }
-    }
-
-    public static function isConnected()
-    {
-        return self::$connection != null;
-    }
-
-    public static function getConnection()
-    {
-        return self::$connection;
-    }
+    public static function getConnection(): PDO;
 }
-?>
