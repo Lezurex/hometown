@@ -1,8 +1,8 @@
 <?php
 
-namespace Database\Entities;
+namespace Database\DAOs;
 
-class Marker
+class MarkerDAO
 {
   public int $id;
   public string $title;
