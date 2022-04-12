@@ -3,6 +3,7 @@
 namespace Database\Repos;
 
 use Database\Database;
+use Database\DAOs\MarkerDAO;
 use PDO;
 
 class MariaMarkerRepo implements MarkerRepo
@@ -19,5 +20,13 @@ class MariaMarkerRepo implements MarkerRepo
     {
         $result = self::$database::getConnection()->query("SELECT * FROM marker;");
         return $result->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    /**
+     * @param MarkerDAO $marker
+     */
+    public function addMarker($marker)
+    {
+        assert($marker instanceof MarkerDAO, "Provided marker is not an instance of Marker!");
     }
 }
