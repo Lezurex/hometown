@@ -4,7 +4,7 @@ namespace Database;
 
 use PDO;
 
-class MariDatabase implements Database
+class MariaDatabaseImpl implements Database
 {
   private static $host = "db";
   private static $username = "root";
