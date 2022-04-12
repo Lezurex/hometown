@@ -1,5 +1,7 @@
 <?php
-
+namespace Login;
+include_once '../database/repos/MariaAdminRepo.php';
+include_once '../database/MariaDatabaseImpl.php';
 use Database\MariaDatabaseImpl;
 use Database\Repos\MariaAdminRepo;
 

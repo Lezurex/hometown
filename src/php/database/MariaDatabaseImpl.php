@@ -1,7 +1,7 @@
 <?php
 
 namespace Database;
-
+include_once 'Database.php';
 use PDO;
 
 class MariaDatabaseImpl implements Database
@@ -32,6 +32,9 @@ class MariaDatabaseImpl implements Database
 
   public static function getConnection(): PDO
   {
+      if (!isset(self::$connection)){
+          self::connect();
+      }
     return self::$connection;
   }
 

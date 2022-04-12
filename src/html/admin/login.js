@@ -16,14 +16,14 @@ function enterEvent(event) {
 function doRequest() {
     if (user.value !== "" && password.value !== "") {
         let request = new XMLHttpRequest();
-        request.open("POST", document.location.protocol + "//" + document.location.hostname + ":" + document.location.port + "/php/login/login.php");
+        request.open("POST", document.location.origin +"/php/login/login.php");
         let formData = new FormData();
         formData.append("username", user.value);
         formData.append("password", password.value);
         request.addEventListener("load", function (event) {
             if (request.status >= 200 && request.status < 300) {
                 if (request.responseText === "proceed") {
-                    window.location.href = document.location.protocol + "//" + document.location.hostname + ":" + document.location.port +  "/admin/dashboard"
+                    window.location.href = document.location.origin +  "./admin/dashboard"
                 } else {
                     loginError.innerHTML = "Falscher Benutzername/Falsches Passwort!";
                 }
