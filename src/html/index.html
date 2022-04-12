@@ -6,11 +6,35 @@
     <meta content="text/javascript" http-equiv="content-script-type"/>
     <meta content="text/css" http-equiv="content-style-type"/>
     <meta http-equiv="content-language" content="de"/>
-    <meta name="author" content="Thomas Heiles"/>
-    <link rel="stylesheet" href="./assets/style.css">
-    <link href="assets/style.css" rel="stylesheet"/>
-
+    <meta name="author" content="Lezurex"/>
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.14.1/css/ol.css"
+          type="text/css">
+    <link rel="stylesheet" href="assets/style.css">
+    <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.14.1/build/ol.js"></script>
 </head>
 <body>
+
+<div id="credit" class="overlay">
+    <a href="https://www.openstreetmap.org/copyright">&copy OpenStreetMap contributors</a>
+</div>
+<div id="admin" class="overlay">
+    <a href="/admin">Admin Login</a>
+</div>
+<div id="map" class="map"></div>
+<script type="text/javascript">
+    var map = new ol.Map({
+        target: 'map',
+        layers: [
+            new ol.layer.Tile({
+                source: new ol.source.OSM()
+            })
+        ],
+        view: new ol.View({
+            center: ol.proj.fromLonLat([8.43, 46.80]),
+            zoom: 8.3
+        })
+    });
+</script>
 </body>
 </html>
