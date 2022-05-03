@@ -1,7 +1,8 @@
 <?php
 
 namespace Database\Repos;
-include_once './CountryRepo.php';
+
+include_once 'CountryRepo.php';
 
 use Database\Database;
 use Database\DTOs\CountryDTO;
@@ -16,12 +17,12 @@ class MariaCountryRepo implements CountryRepo
 
     public function __construct(Database $database)
     {
-        self::$database = $database;
+        $this->database = $database;
     }
 
     public function getAllCities(): array
     {
-        $result = self::$database::getConnection()->query("SELECT country.id, country.name FROM country;");
+        $result = $this->database::getConnection()->query("SELECT country.id, country.name FROM country;");
 
         $daoCountries = $result->fetchAll(PDO::FETCH_ASSOC);
         $dtoCountries = array();
@@ -36,7 +37,7 @@ class MariaCountryRepo implements CountryRepo
     public function addCountry(CountryDTO $country)
     {
         assert($country instanceof CountryDTO, self::ASSERT_ERROR);
-        $stmt = self::$database->getConnection()->prepare("INSERT INTO country (name,)
+        $stmt = $this->database->getConnection()->prepare("INSERT INTO country (name,)
         VALUES (:name);");
 
         $stmt->bindParam(':name', $country->name);
@@ -47,7 +48,7 @@ class MariaCountryRepo implements CountryRepo
     public function deleteCountry(CountryDTO $country)
     {
         assert($country instanceof CountryDTO, self::ASSERT_ERROR);
-        $stmt = self::$database->getConnection()->prepare("DELETE FROM country WHERE id = :id;");
+        $stmt = $this->database->getConnection()->prepare("DELETE FROM country WHERE id = :id;");
 
         $stmt->bindParam(':id', $country->id);
 
@@ -57,7 +58,7 @@ class MariaCountryRepo implements CountryRepo
     public function updateCountry(CountryDTO $country)
     {
         assert($country instanceof CountryDTO, self::ASSERT_ERROR);
-        $stmt = self::$database->getConnection()->prepare("UPDATE country SET
+        $stmt = $this->database->getConnection()->prepare("UPDATE country SET
         name = :name WHERE id = :id;");
 
         $stmt->bindParam(':name', $country->name);
@@ -69,7 +70,7 @@ class MariaCountryRepo implements CountryRepo
     public function countryExists(CountryDTO $country): bool
     {
         assert($country instanceof CountryDTO, self::ASSERT_ERROR);
-        $stmt = self::$database->getConnection()->prepare("SELECT FROM country WHERE id = :id");
+        $stmt = $this->database->getConnection()->prepare("SELECT FROM country WHERE id = :id");
 
         $stmt->bindParam(':id', $country->id);
 

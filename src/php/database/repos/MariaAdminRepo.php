@@ -15,12 +15,12 @@ class MariaAdminRepo implements AdminRepo
 
     public function __construct(Database $database)
     {
-        self::$database = $database;
+        $this->database = $database;
     }
 
     public function getCredentials($username): array
     {
-        $stmt = self::$database::getConnection()->prepare("SELECT passwordHash FROM admin WHERE username = :username;");
+        $stmt = $this->database::getConnection()->prepare("SELECT passwordHash FROM admin WHERE username = :username;");
         $stmt->bindParam(':username', $username);
         $stmt->execute();
         return $stmt->fetch();
@@ -29,7 +29,7 @@ class MariaAdminRepo implements AdminRepo
     public function registerAdmin($username, $password)
     {
         $passwordHashed = password_hash($password, PASSWORD_DEFAULT);
-        $stmt = self::$database::getConnection()->prepare("INSERT INTO admin (username, passwordHash) 
+        $stmt = $this->database::getConnection()->prepare("INSERT INTO admin (username, passwordHash) 
             VALUES (:username, :password) ON duplicate KEY UPDATE username=:username, passwordHash=:password;");
         $stmt->bindParam(':username', $username);
         $stmt->bindParam(':passwordHash', $passwordHashed);

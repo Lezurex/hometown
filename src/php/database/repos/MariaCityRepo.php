@@ -1,7 +1,8 @@
 <?php
 
 namespace Database\Repos;
-include_once './CityRepo.php.php';
+
+include_once 'CityRepo.php.php';
 
 use Database\Database;
 use Database\DTOs\CityDTO;
@@ -17,12 +18,12 @@ class MariaCityRepo implements CityRepo
 
   public function __construct(Database $database)
   {
-    self::$database = $database;
+    $this->$database = $database;
   }
 
   public function getAllCities(): array
   {
-    $result = self::$database::getConnection()->query(
+    $result = $this->database::getConnection()->query(
       "SELECT
     city.id,
     city.name,
@@ -51,7 +52,7 @@ ON
 
   public function getByPostalCode(int $postalCode, string $country): CityDTO
   {
-    $stmt = self::$database->getConnection()->prepare("SELECT city.id, city.name, city.postalCode, country.id AS countryId, country.name AS countryName
+    $stmt = $this->database->getConnection()->prepare("SELECT city.id, city.name, city.postalCode, country.id AS countryId, country.name AS countryName
     FROM city INNER JOIN(country) on (city.countryId = country.id) WHERE country.name LIKE :country AND city.postalCode LIKE :postalCode;");
 
     $stmt->bindParam(':country', $country);
@@ -66,7 +67,7 @@ ON
   public function addCity(CityDTO $city)
   {
     assert($city instanceof CityDTO, self::ASSERT_ERROR);
-    $stmt = self::$database->getConnection()->prepare("INSERT INTO city (name, postalCode, countryId)
+    $stmt = $this->database->getConnection()->prepare("INSERT INTO city (name, postalCode, countryId)
         VALUES (:name, :postalCode, :countryId);");
 
     $stmt->bindParam(':name', $city->name);
@@ -79,7 +80,7 @@ ON
   public function deleteCity(CityDTO $city)
   {
     assert($city instanceof CityDTO, self::ASSERT_ERROR);
-    $stmt = self::$database->getConnection()->prepare("DELETE FROM city WHERE id = :id;");
+    $stmt = $this->database->getConnection()->prepare("DELETE FROM city WHERE id = :id;");
 
     $stmt->bindParam(':id', $city->id);
 
@@ -89,7 +90,7 @@ ON
   public function updateCity(CityDTO $city)
   {
     assert($city instanceof CityDTO, self::ASSERT_ERROR);
-    $stmt = self::$database->getConnection()->prepare("UPDATE city SET
+    $stmt = $this->database->getConnection()->prepare("UPDATE city SET
         name = :name, postalCode = :postalCode, countryId = :countryId, WHERE id = :id;");
 
     $stmt->bindParam(':name', $city->name);
@@ -103,7 +104,7 @@ ON
   public function cityExists(CityDTO $city): bool
   {
     assert($city instanceof CityDTO, self::ASSERT_ERROR);
-    $stmt = self::$database->getConnection()->prepare("SELECT FROM city WHERE id = :id");
+    $stmt = $this->database->getConnection()->prepare("SELECT FROM city WHERE id = :id");
 
     $stmt->bindParam(':id', $city->id);
 

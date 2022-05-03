@@ -2,7 +2,7 @@
 
 namespace Database\Repos;
 
-include_once './MarkerRepo.php';
+include_once 'MarkerRepo.php';
 
 use Database\Database;
 use Database\DTOs\CityDTO;
@@ -19,12 +19,12 @@ class MariaMarkerRepo implements MarkerRepo
 
     public function __construct(Database $database)
     {
-        self::$database = $database;
+        $this->database = $database;
     }
 
     public function getAllMarkers(): array
     {
-        $result = self::$database::getConnection()->query(
+        $result = $this->database::getConnection()->query(
             "SELECT
     marker.id,
     marker.title,
@@ -60,7 +60,7 @@ ON
     public function addMarker(MarkerDTO $marker)
     {
         assert($marker instanceof MarkerDTO, self::ASSERT_ERROR);
-        $stmt = self::$database->getConnection()->prepare("INSERT INTO marker (title, lat, lon, address, cityId)
+        $stmt = $this->database->getConnection()->prepare("INSERT INTO marker (title, lat, lon, address, cityId)
         VALUES (:title, :lat, :lon, :address, :cityId);");
 
         $stmt->bindParam(':title', $marker->title);
@@ -75,7 +75,7 @@ ON
     public function deleteMarker(MarkerDTO $marker)
     {
         assert($marker instanceof MarkerDTO, self::ASSERT_ERROR);
-        $stmt = self::$database->getConnection()->prepare("DELETE FROM marker WHERE id = :id;");
+        $stmt = $this->database->getConnection()->prepare("DELETE FROM marker WHERE id = :id;");
 
         $stmt->bindParam(':id', $marker->id);
 
@@ -85,7 +85,7 @@ ON
     public function updateMaker(MarkerDTO $marker)
     {
         assert($marker instanceof MarkerDTO, self::ASSERT_ERROR);
-        $stmt = self::$database->getConnection()->prepare("UPDATE marker SET
+        $stmt = $this->database->getConnection()->prepare("UPDATE marker SET
         title = :title, lat = :lat, lon = :lon, address = :address, cityId = :cityId WHERE id = :id;");
 
         $stmt->bindParam(':title', $marker->title);
@@ -101,7 +101,7 @@ ON
     public function markerExists(MarkerDTO $marker): bool
     {
         assert($marker instanceof MarkerDTO, self::ASSERT_ERROR);
-        $stmt = self::$database->getConnection()->prepare("SELECT FROM marker WHERE id = :id");
+        $stmt = $this->database->getConnection()->prepare("SELECT FROM marker WHERE id = :id");
 
         $stmt->bindParam(':id', $marker->id);
 
