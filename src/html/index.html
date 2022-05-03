@@ -15,12 +15,30 @@
 </head>
 <body>
 
+<div id="input" class="overlay">
+
+    <form action="">
+        <label for="input-zip-code">ZIP-Code</label>
+        <input type="text" name="zip-code" id="input-zip-code">
+        <label for="input-country">Country</label>
+        <input type="text" name="country" id="input-country">
+        <input type="submit" value="add Marker">
+    </form>
+    <div id="search">
+        <form action="">
+            <label for="search-title" id="search-label  ">Search</label>
+            <input type="search" name="search-title" id="search-title">
+        </form>
+    </div>
+</div>
+
 <div id="credit" class="overlay">
-    <a href="https://www.openstreetmap.org/copyright">&copy OpenStreetMap contributors</a>
+    <a href="https://www.openstreetmap.org/copyright"></a>
 </div>
 <div id="admin" class="overlay">
-    <a href="/admin">Admin Login</a>
+    <a href="./admin/">Admin Login</a>
 </div>
+
 <div id="map" class="map"></div>
 <script type="text/javascript">
     var map = new ol.Map({
