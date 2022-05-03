@@ -20,9 +20,10 @@ class MariaAdminRepo implements AdminRepo
 
     public function getCredentials($username): array
     {
-        $result = self::$database::getConnection()->query("SELECT passwordHash FROM admin
-                    WHERE username = $username");
-        return $result->fetch();
+        $stmt = self::$database::getConnection()->prepare("SELECT passwordHash FROM admin WHERE username = :username;");
+        $stmt->bindParam(':username', $username);
+        $stmt->execute();
+        return $stmt->fetch();
     }
 
     public function registerAdmin($username, $password)
