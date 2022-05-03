@@ -48,6 +48,20 @@ ON
     return $dtoCities;
   }
 
+  public function getByPostalCode(int $postalCode, string $country): CityDTO
+  {
+    $stmt = self::$database->getConnection()->prepare("SELECT city.id, city.name, city.postalCode, country.id AS countryId, country.name AS countryName
+    FROM city INNER JOIN(country) on (city.countryId = country.id) WHERE country.name LIKE :country AND city.postalCode LIKE :postalCode;");
+
+    $stmt->bindParam(':country', $country);
+    $stmt->bindParam(':postalCode', $postalCode);
+
+    $stmt->execute();
+    $result = $stmt->fetch();
+    $country = new CountryDTO($result['countryId'], $result['countryName']);
+    return new CityDTO($result['id'], $result['name'], $result['postalCode'], $country);
+  }
+
   public function addCity(CityDTO $city)
   {
     assert($city instanceof CityDTO, self::ASSERT_ERROR);

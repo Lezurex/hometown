@@ -8,6 +8,8 @@ interface CityRepo
 {
   public function getAllCities(): array;
 
+  public function getByPostalCode(int $postalCode, string $country): CityDTO;
+
   public function addCity(CityDTO $city);
 
   public function deleteCity(CityDTO $city);
