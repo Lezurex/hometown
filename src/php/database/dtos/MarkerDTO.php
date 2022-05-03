@@ -21,12 +21,11 @@ class MarkerDTO
    */
   public function __construct($id, $title, $lat, $lon, $address, $city)
   {
-    self::$id = $id;
-    self::$title = $title;
-    self::$lat = $lat;
-    self::$lon = $lon;
-    self::$address = $address;
-    self::$city = $city;
+    $this->id = $id;
+    $this->title = $title;
+    $this->lat = $lat;
+    $this->lon = $lon;
+    $this->address = $address;
+    $this->city = $city;
   }
-  
 }

@@ -9,7 +9,7 @@ class CountryDTO
 
   public function __construct($id, $name)
   {
-    self::$id = $id;
-    self::$name = $name;
+    $this->id = $id;
+    $this->name = $name;
   }
 }

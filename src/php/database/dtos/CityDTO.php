@@ -11,9 +11,9 @@ class CityDTO
 
   public function __construct($id, $name, $postalCode, $country)
   {
-    self::$id = $id;
-    self::$name = $name;
-    self::$postalCode = $postalCode;
-    self::$country = $country;
+    $this->id = $id;
+    $this->name = $name;
+    $this->postalCode = $postalCode;
+    $this->country = $country;
   }
 }
