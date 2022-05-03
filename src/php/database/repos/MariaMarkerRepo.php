@@ -60,11 +60,13 @@ ON
         assert($marker instanceof MarkerDTO, self::ASSERT_ERROR);
         $stmt = self::$database->getConnection()->prepare("INSERT INTO marker (title, lat, lon, address, cityId)
         VALUES (:title, :lat, :lon, :address, :cityId);");
+
         $stmt->bindParam(':title', $marker->title);
         $stmt->bindParam(':lat', $marker->lat);
         $stmt->bindParam(':lon', $marker->lon);
         $stmt->bindParam(':address', $marker->address);
         $stmt->bindParam(':cityId', $marker->city->id);
+
         $stmt->execute();
     }
 
