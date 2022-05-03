@@ -1,6 +1,7 @@
 <?php
 
 namespace Database\Repos;
+include_once './CityRepo.php.php';
 
 use Database\Database;
 use Database\DTOs\CityDTO;

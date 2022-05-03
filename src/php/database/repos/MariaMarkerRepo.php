@@ -2,6 +2,8 @@
 
 namespace Database\Repos;
 
+include_once './MarkerRepo.php';
+
 use Database\Database;
 use Database\DTOs\CityDTO;
 use Database\DTOs\CountryDTO;
