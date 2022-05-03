@@ -40,6 +40,6 @@ class MariaDatabaseImpl implements Database
 
   private static function buildConnectionString(): string
   {
-    return "mysql:host=" . self::$host . "port=" . self::$port . "dbname=" . self::$database;
+    return "mysql:host=" . self::$host . ";port=" . self::$port . ";dbname=" . self::$database;
   }
 }

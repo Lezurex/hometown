@@ -5,6 +5,7 @@ namespace Database\Repos;
 use Database\Database;
 use Database\DAOs\MarkerDAO;
 use PDO;
+
 include_once 'AdminRepo.php';
 
 class MariaAdminRepo implements AdminRepo
@@ -19,13 +20,17 @@ class MariaAdminRepo implements AdminRepo
 
     public function getCredentials($username): array
     {
-        $result = self::$database::getConnection()->query("SELECT passwordHash FROM ADMIN
+        $result = self::$database::getConnection()->query("SELECT passwordHash FROM admin
                     WHERE username = $username");
         return $result->fetch();
     }
-    public function registerAdmin($username, $password){
+
+    public function registerAdmin($username, $password)
+    {
         $passwordHashed = password_hash($password, PASSWORD_DEFAULT);
-        self::$database::getConnection()->query("INSERT INTO admin (username, passwordHash) 
-            VALUES ($username, $passwordHashed) ON duplicate KEY UPDATE username=$username, passwordHash=$passwordHashed;");
+        $stmt = self::$database::getConnection()->prepare("INSERT INTO admin (username, passwordHash) 
+            VALUES (:username, :password) ON duplicate KEY UPDATE username=:username, passwordHash=:password;");
+        $stmt->bindParam(':username', $username);
+        $stmt->bindParam(':passwordHash', $passwordHashed);
     }
 }
