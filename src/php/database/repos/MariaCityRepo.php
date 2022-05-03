@@ -77,7 +77,7 @@ ON
     $stmt = self::$database->getConnection()->prepare("UPDATE city SET
         name = :name, postalCode = :postalCode, countryId = :countryId, WHERE id = :id;");
 
-    $stmt->bindParam(':name', $city->title);
+    $stmt->bindParam(':name', $city->name);
     $stmt->bindParam(':postalCode', $city->postalCode);
     $stmt->bindParam(':countryId', $city->country->id);
     $stmt->bindParam(':id', $city->id);
