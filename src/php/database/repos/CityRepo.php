@@ -17,4 +17,6 @@ interface CityRepo
   public function updateCity(CityDTO $city);
 
   public function cityExists(CityDTO $city): bool;
+
+  public function addOrGet(CityDTO $city): CityDTO;
 }

@@ -1,9 +1,9 @@
 <?php
-include_once 'nominatimRepo.php';
+include_once 'NominatimRepo.php';
 
-use Database\Repos\nominatimRepo;
+use Database\Repos\NominatimRepo;
 
-class nominatimRepoImpl implements nominatimRepo
+class NominatimRepoImpl implements NominatimRepo
 {
     public function getCoordinates($address, $zip_code, $country): array
     {
@@ -16,9 +16,10 @@ class nominatimRepoImpl implements nominatimRepo
         curl_close($curl);
         $lat = $apiJSON[0]['lat'];
         $lon = $apiJSON[0]['lon'];
-        $cityId = 0;
+        $city = $apiJSON[0]['address'][2]['localname'];
+        $postalCode = $apiJSON[0]['address'][5]['localname'];
+        $country = $apiJSON[0]['address'][6]['localname'];
 
-        return [$lat, $lon, $cityId];
+        return [$lat, $lon, $city, $postalCode, $country];
     }
 }
-

@@ -1,8 +1,8 @@
 <?php
+
 namespace Database\Repos;
 
-interface nominatimRepo
+interface NominatimRepo
 {
     public function getCoordinates($address, $zip_code, $country);
-
 }

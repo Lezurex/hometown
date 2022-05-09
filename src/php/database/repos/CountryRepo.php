@@ -14,5 +14,7 @@ interface CountryRepo
 
   public function updateCountry(CountryDTO $country);
 
-  public function CountryExists(CountryDTO $country): bool;
+  public function countryExists(CountryDTO $country): bool;
+
+  public function addOrGet(CountryDTO $country): CountryDTO;
 }

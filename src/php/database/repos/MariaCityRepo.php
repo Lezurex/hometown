@@ -2,7 +2,8 @@
 
 namespace Database\Repos;
 
-include_once 'CityRepo.php.php';
+include_once 'CityRepo.php';
+include_once __DIR__ . '/../Database.php';
 
 use Database\Database;
 use Database\DTOs\CityDTO;
@@ -110,5 +111,24 @@ ON
 
     $stmt->execute();
     return $stmt->rowCount() == 1;
+  }
+
+  public function addOrGet(CityDTO $city): CityDTO
+  {
+    assert($city instanceof CityDTO, self::ASSERT_ERROR);
+    $stmt = $this->database->getConnection()->prepare("SELECT * FROM city INNER JOIN(country) on (city.countryId = country.id) WHERE postalCode = :postalCode AND countryId = :countryId");
+
+    $stmt->bindParam(':postalCode', $city->postalCode);
+    $stmt->bindParam(':countryId', $city->country->id);
+
+    $stmt->execute();
+    if ($stmt->rowCount() >= 1) {
+      $result = $stmt->fetch();
+      $country = new CountryDTO($result['country.id'], $result['country.name']);
+      return new CityDTO($result['city.id'], $result['city.name'], $result['city.postalCode'], $country);
+    } else {
+      $this->addCity($city);
+      return $this->addOrGet($city);
+    }
   }
 }

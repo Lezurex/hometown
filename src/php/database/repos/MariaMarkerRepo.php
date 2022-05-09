@@ -3,6 +3,9 @@
 namespace Database\Repos;
 
 include_once 'MarkerRepo.php';
+include_once __DIR__ . '/../dtos/CountryDTO.php';
+include_once __DIR__ . '/../dtos/CityDTO.php';
+include_once __DIR__ . '/../dtos/MarkerDTO.php';
 
 use Database\Database;
 use Database\DTOs\CityDTO;

@@ -1,62 +1,51 @@
 <!DOCTYPE html>
 <html lang="de">
-<head>
+  <head>
     <title>Hometown</title>
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
-    <meta content="text/javascript" http-equiv="content-script-type"/>
-    <meta content="text/css" http-equiv="content-style-type"/>
-    <meta http-equiv="content-language" content="de"/>
-    <meta name="author" content="Lezurex"/>
-    <link rel="stylesheet"
-          href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.14.1/css/ol.css"
-          type="text/css">
-    <link rel="stylesheet" href="assets/style.css">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta content="text/javascript" http-equiv="content-script-type" />
+    <meta content="text/css" http-equiv="content-style-type" />
+    <meta http-equiv="content-language" content="de" />
+    <meta name="author" content="Lezurex" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.14.1/css/ol.css"
+      type="text/css"
+    />
+    <link rel="stylesheet" href="assets/style.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.14.1/build/ol.js"></script>
-</head>
-<body>
-
-<div id="input" class="overlay">
-
-    <form action="./../php/database/marker/addMarker.php" method="post">
+  </head>
+  <body>
+    <div id="input" class="overlay">
+      <form action="./../php/addMarker.php" method="post">
         <label for="address">Address</label>
-        <input type="text" name="address" id="address">
+        <input type="text" name="address" id="address" />
         <label for="input-zip-code">ZIP-Code</label>
-        <input type="text" name="zip-code" id="input-zip-code">
+        <input type="text" name="zip-code" id="input-zip-code" />
         <label for="input-country">Country</label>
-        <input type="text" name="country" id="input-country">
+        <input type="text" name="country" id="input-country" />
         <label for="input-title">Name</label>
-        <input type="text" name="title" id="input-title">
-        <input type="submit" value="add Marker">
-    </form>
-    <div id="search">
+        <input type="text" name="title" id="input-title" />
+        <input type="submit" value="add Marker" />
+      </form>
+      <div id="search">
         <form action="">
-            <label for="search-title" id="search-label  ">Search</label>
-            <input type="search" name="search-title" id="search-title">
+          <label for="search-title" id="search-label  ">Search</label>
+          <input type="search" name="search-title" id="search-title" />
         </form>
+      </div>
     </div>
-</div>
 
-<div id="credit" class="overlay">
-    <a href="https://www.openstreetmap.org/copyright"></a>
-</div>
-<div id="admin" class="overlay">
-    <a href="./admin/">Admin Login</a>
-</div>
+    <div id="credit" class="overlay">
+      <a href="https://www.openstreetmap.org/copyright"></a>
+    </div>
+    <div id="admin" class="overlay">
+      <a href="./admin/">Admin Login</a>
+    </div>
 
-<div id="map" class="map"></div>
-<script type="text/javascript">
-    var map = new ol.Map({
-        target: 'map',
-        layers: [
-            new ol.layer.Tile({
-                source: new ol.source.OSM()
-            })
-        ],
-        view: new ol.View({
-            center: ol.proj.fromLonLat([8.43, 46.80]),
-            zoom: 8.3
-        })
-    });
-</script>
-</body>
+    <div id="map" class="map"></div>
+    <div id="popup"></div>
+    <script defer type="text/javascript" src="assets/main.js"></script>
+  </body>
 </html>
