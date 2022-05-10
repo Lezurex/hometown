@@ -16,6 +16,10 @@ use Database\DTOs\MarkerDTO;
 use Database\Repos\MariaCityRepo;
 use Database\Repos\MariaCountryRepo;
 
+if ($_POST['address'] == '' || $_POST['zip-code'] == '' || $_POST['country'] == '' || $_POST['title'] == '') {
+  die('Please fill out all fields!');
+}
+
 $database = new MariaDatabaseImpl();
 
 $markerRepo = new MariaMarkerRepo($database);
@@ -29,8 +33,8 @@ $country = $_POST['country'];
 $title = $_POST['title'];
 
 $additional_data = $nominatimRepo->getCoordinates($address, $zip_code, $country);
-$lat = $additional_data[0];
-$lon = $additional_data[1];
+$lat = $additional_data[1];
+$lon = $additional_data[0];
 $city_name = $additional_data[2];
 $postalCode = $additional_data[3];
 $country_name = $additional_data[4];
@@ -38,4 +42,6 @@ $country_name = $additional_data[4];
 $country = $countryRepo->addOrGet(new CountryDTO(-1, $country_name));
 $city = $cityRepo->addOrGet(new CityDTO(-1, $city_name, $postalCode, $country));
 
-$markerRepo->addMarker(new MarkerDTO(-1, $title, $lat, $lon, $address, $city_id));
+$markerRepo->addMarker(new MarkerDTO(-1, $title, $lat, $lon, $address, $city));
+
+header("Location: /html");

@@ -3,6 +3,7 @@
 namespace Database\Repos;
 
 include_once 'CountryRepo.php';
+include_once __DIR__ . '/../Database.php';
 include_once __DIR__ . '/../dtos/CountryDTO.php';
 
 use Database\Database;
@@ -38,7 +39,7 @@ class MariaCountryRepo implements CountryRepo
   public function addCountry(CountryDTO $country)
   {
     assert($country instanceof CountryDTO, self::ASSERT_ERROR);
-    $stmt = $this->database->getConnection()->prepare("INSERT INTO country (name,)
+    $stmt = $this->database->getConnection()->prepare("INSERT INTO country (name)
         VALUES (:name);");
 
     $stmt->bindParam(':name', $country->name);
@@ -89,7 +90,7 @@ class MariaCountryRepo implements CountryRepo
     $stmt->execute();
     if ($stmt->rowCount() >= 1) {
       $result = $stmt->fetch();
-      return new CountryDTO($result->id, $result->name);
+      return new CountryDTO($result['id'], $result['name']);
     } else {
       $this->addCountry($country);
       return $this->addOrGet($country);
