@@ -25,11 +25,21 @@ class NominatimRepoImpl implements NominatimRepo
         $lon = $apiJSON['centroid']['coordinates'][1];
         $city = "";
         foreach ($apiJSON['address'] as $item) {
-            if ($item['type'] == 'village' || $item['type'] == 'city') {
+            if ($item['type'] == 'village' || $item['type'] == 'city' || ($item['type'] == 'administrative' && $item['place_type'] == 'city')) {
                 $city = $item['localname'];
                 break;
             }
         }
+
+        if ($city == '') {
+            foreach ($apiJSON['address'] as $item) {
+                if ($item['type'] == 'administrative') {
+                    $city = $item['localname'];
+                    break;
+                }
+            }
+        }
+
         $postalCode = '';
         foreach ($apiJSON['address'] as $item) {
             if ($item['type'] == 'postcode') {
