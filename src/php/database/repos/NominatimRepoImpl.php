@@ -13,6 +13,9 @@ class NominatimRepoImpl implements NominatimRepo
         curl_setopt($curl, CURLOPT_REFERER, "https://ap20b.lezurex.com/");
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         $apiJSON = json_decode(curl_exec($curl), true);
+        if (count($apiJSON) == 0) {
+            die('Not found!');
+        }
         $osmType = strtoupper(substr($apiJSON[0]['osm_type'], 0, 1));
         $osmId = $apiJSON[0]['osm_id'];
         curl_setopt($curl, CURLOPT_URL, "https://nominatim.openstreetmap.org/details.php?osmtype=$osmType&osmid=$osmId&format=json&addressdetails=1");
