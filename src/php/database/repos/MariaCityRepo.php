@@ -19,7 +19,7 @@ class MariaCityRepo implements CityRepo
 
   public function __construct(Database $database)
   {
-    $this->$database = $database;
+    $this->database = $database;
   }
 
   public function getAllCities(): array
@@ -116,7 +116,8 @@ ON
   public function addOrGet(CityDTO $city): CityDTO
   {
     assert($city instanceof CityDTO, self::ASSERT_ERROR);
-    $stmt = $this->database->getConnection()->prepare("SELECT * FROM city INNER JOIN(country) on (city.countryId = country.id) WHERE postalCode = :postalCode AND countryId = :countryId");
+    $stmt = $this->database->getConnection()->prepare("SELECT city.id, city.name, city.postalCode, country.id AS countryId, country.name AS countryName
+    FROM city INNER JOIN(country) on (countryId = country.id) WHERE postalCode = :postalCode AND countryId = :countryId");
 
     $stmt->bindParam(':postalCode', $city->postalCode);
     $stmt->bindParam(':countryId', $city->country->id);
@@ -124,8 +125,8 @@ ON
     $stmt->execute();
     if ($stmt->rowCount() >= 1) {
       $result = $stmt->fetch();
-      $country = new CountryDTO($result['country.id'], $result['country.name']);
-      return new CityDTO($result['city.id'], $result['city.name'], $result['city.postalCode'], $country);
+      $country = new CountryDTO($result['countryId'], $result['countryName']);
+      return new CityDTO($result['id'], $result['name'], $result['postalCode'], $country);
     } else {
       $this->addCity($city);
       return $this->addOrGet($city);
